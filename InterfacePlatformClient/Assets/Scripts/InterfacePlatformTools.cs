@@ -5,5 +5,8 @@ using Newtonsoft.Json;
 
 public class InterfacePlatformTools
 {
-    
+    public static void Test()
+    {
+        
+    }
 }

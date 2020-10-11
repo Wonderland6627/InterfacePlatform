@@ -18,6 +18,9 @@ public class UnityPanel : UIPanel
     [Header("版本选择")]
     public Dropdown versionDropdown;
 
+    [Header("选项卡Root")]
+    public Transform scrollContent;
+
     [Header("引擎选项卡预制体")]
     public EngineInfoUI engineUIPrefab;
 
@@ -50,7 +53,32 @@ public class UnityPanel : UIPanel
 
     private void OnAddVersionBtnClick()
     {
-        CommonFunction.OpenDirectory("exe");
+        ForeachUnityEditor();
+    }
+
+    private void ForeachUnityEditor()
+    {
+        CommonFunction.OpenDirectory("exe", OnForeachSuccess, OnForeachFailed);
+    }
+
+    private void OnForeachSuccess(string filePath)
+    {
+        if(string.IsNullOrEmpty (filePath))
+        {
+            Debug.LogError("Editor选择路径为空");
+            return;
+        }
+        if(!filePath.EndsWith(@"Editor\Unity.exe"))
+        {
+            Debug.LogError("选择的不是Unity.exe");
+            return;
+        }
+        Debug.Log(filePath);
+    }
+
+    private void OnForeachFailed()
+    {
+
     }
 
     /// <summary>
@@ -73,16 +101,17 @@ public class UnityPanel : UIPanel
 
     private void InstallUnity()
     {
-        if (string.IsNullOrEmpty(GetInstallerPath()))
+        string installerPath = GetInstallerPath();
+        if (string.IsNullOrEmpty(installerPath))
         {
             Debug.LogError("安装包路径为空");
             return;
         }
-        if(!File.Exists(GetInstallerPath()))
+        if (!File.Exists(installerPath))
         {
             Debug.Log("安装包不存在");
             string url = "";
-            if (versionDownloadTable.TryGetValue(selectedVersion,out url))
+            if (versionDownloadTable.TryGetValue(selectedVersion, out url))
             {
                 Application.OpenURL(url);
                 Debug.Log("打开下载页");
@@ -90,10 +119,10 @@ public class UnityPanel : UIPanel
             else
             {
                 OpenUnityCN();
-                Debug.LogError("链接有误，前往官网");       
+                Debug.LogError("链接有误，前往官网");
             }
         }
-        CommonFunction.OpenFile(GetInstallerPath());
+        CommonFunction.OpenFile(installerPath);
     }
 
     private string GetInstallerPath()

@@ -21,11 +21,13 @@ public class EngineInfoUI : MonoBehaviour, IPointerClickHandler
     public Image unrealIconImg;
     public Text versionText;
 
+    [Header("移除此版本")]
+    public Button removeVersionBtn;
+
     private void Start()
     {
         unityIconImg.gameObject.SetActive(false);
         unrealIconImg.gameObject.SetActive(false);
-        Init(EngineType.UnityEngine, "2018.2.17f1");
     }
 
     public void Init(EngineType type, string version)
@@ -39,6 +41,19 @@ public class EngineInfoUI : MonoBehaviour, IPointerClickHandler
             unrealIconImg.gameObject.SetActive(true);
         }
         versionText.text = version;
+    }
+
+    /// <summary>
+    /// 移除此版本
+    /// </summary>
+    private void RemoveVersion()
+    {
+        string version = versionText.text;
+        if(string.IsNullOrEmpty(version))
+        {
+            Debug.LogError("版本为空");
+            return;
+        }
     }
 
     public void OnPointerClick(PointerEventData eventData)

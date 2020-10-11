@@ -81,10 +81,10 @@ public class CommonFunction
     }
 
     /// <summary>
-    /// 打开文件选框 type文件类型
+    /// 打开文件选框 type文件类型 string是文件路径
     /// </summary>
     /// <param name="type"></param>
-    public static void OpenDirectory(string type)
+    public static void OpenDirectory(string type, Action<string> successCallback,Action failedCallback)
     {
         OpenFileName openFileName = new OpenFileName();
         openFileName.structSize = Marshal.SizeOf(openFileName);
@@ -99,7 +99,17 @@ public class CommonFunction
 
         if (LocalDialog.GetOpenFileName(openFileName))//点击系统对话框框保存按钮
         {
-            Debug.Log(openFileName.file);
+            if(successCallback != null)
+            {
+                successCallback.Invoke(openFileName.file);
+            }
+        }
+        else
+        {
+            if(failedCallback !=null)
+            {
+                failedCallback.Invoke();
+            }
         }
     }
 }

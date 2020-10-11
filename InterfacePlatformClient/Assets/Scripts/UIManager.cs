@@ -31,6 +31,9 @@ public class UIManager : MonoBehaviour
 
     public List<UIPanel> uiPanelsList;
 
+    [Header("顶层UI")]
+    public Transform topUIRoot;
+
     private void Awake()
     {
         if (_instance != null)
@@ -52,4 +55,18 @@ public class UIManager : MonoBehaviour
         uiPanelsList = new List<UIPanel>();
     }
 
+    /// <summary>
+    /// 提示弹窗
+    /// </summary>
+    private void ShowMessagePanel(MessageParam param)
+    {
+        MessagePanel messagePanel = Resources.Load<MessagePanel>("UIPanel/MessagePanel");
+        if(messagePanel == null)
+        {
+            Debug.LogError("提示窗加载失败");
+            return;
+        }
+
+        messagePanel.InitPanel(param);
+    }
 }
