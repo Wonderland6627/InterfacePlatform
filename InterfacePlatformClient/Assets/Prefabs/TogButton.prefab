@@ -120,9 +120,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   toggle: {fileID: 0}
+  graphics:
+  - {fileID: 114837781889863862}
+  - {fileID: 114914667422515816}
   normalColor: {r: 0.6039216, g: 0.6, b: 0.6, a: 1}
-  highLightColor: {r: 1, g: 1, b: 1, a: 0}
-  normalAlaph: 0.5
+  highLightColor: {r: 1, g: 1, b: 1, a: 1}
+  normalAlaph: 1
   highLightAlaph: 1
 --- !u!114 &114837781889863862
 MonoBehaviour:
