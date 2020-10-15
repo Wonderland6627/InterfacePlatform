@@ -2,6 +2,7 @@
 
 public class UIPanel : MonoBehaviour
 {
+    [Header("面板描述")]
     [TextArea()]
     public string desc;
     [Space(10)]

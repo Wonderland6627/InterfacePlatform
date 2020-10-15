@@ -2245,6 +2245,11 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 742807879}
     m_Modifications:
+    - target: {fileID: 114356186914916034, guid: b852a6115e9bf1947b78b393f341407c,
+        type: 2}
+      propertyPath: m_Options.m_Options.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 224199292933238164, guid: b852a6115e9bf1947b78b393f341407c,
         type: 2}
       propertyPath: m_LocalPosition.x
@@ -2364,6 +2369,21 @@ Prefab:
         type: 2}
       propertyPath: m_SizeDelta.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114356186914916034, guid: b852a6115e9bf1947b78b393f341407c,
+        type: 2}
+      propertyPath: m_Options.m_Options.Array.data[0].m_Text
+      value: 2019.4.0f1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114356186914916034, guid: b852a6115e9bf1947b78b393f341407c,
+        type: 2}
+      propertyPath: m_Options.m_Options.Array.data[1].m_Text
+      value: 2019.4.0f1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114356186914916034, guid: b852a6115e9bf1947b78b393f341407c,
+        type: 2}
+      propertyPath: m_Options.m_Options.Array.data[2].m_Text
+      value: 2019.4.0f1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b852a6115e9bf1947b78b393f341407c, type: 2}

@@ -27,6 +27,10 @@ public class UnityPanel : UIPanel
     public string installerPath;
     [SerializeField]
     private string selectedVersion;
+
+    /// <summary>
+    /// Unity Editor版本和安装包下载地址
+    /// </summary>
     private Dictionary<string, string> versionDownloadTable;//下载地址，检测本地没有安装包后使用
 
     private const string Prefix = "UnityDownloadAssistant-";
@@ -42,6 +46,12 @@ public class UnityPanel : UIPanel
             { "2018.2.17f1", "https://download.unitychina.cn/download_unity/88933597c842/UnityDownloadAssistant-2018.2.17f1.exe" },
             { "2019.4.0f1", "https://download.unitychina.cn/download_unity/38dbd65869c4/Windows64EditorInstaller/UnitySetup64.exe" },
         };
+        List<Dropdown.OptionData> optionsList = new List<Dropdown.OptionData>();
+        foreach (var pairs in versionDownloadTable)//根据表初始化下拉框内容
+        {
+            optionsList.Add(new Dropdown.OptionData(pairs.Key));
+        }
+        versionDropdown.AddOptions(optionsList);
 
         unityBtn.onClick.AddListener(OpenUnityCN);
         addVersionBtn.onClick.AddListener(OnAddVersionBtnClick);
@@ -74,11 +84,12 @@ public class UnityPanel : UIPanel
             return;
         }
         Debug.Log(filePath);
+
     }
 
     private void OnForeachFailed()
     {
-
+        //todo 弹出提示框
     }
 
     /// <summary>
