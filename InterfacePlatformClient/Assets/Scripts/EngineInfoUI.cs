@@ -24,14 +24,16 @@ public class EngineInfoUI : MonoBehaviour, IPointerClickHandler
     [Header("移除此版本")]
     public Button removeVersionBtn;
 
-    private void Start()
+    private void SetAllActiveFalse()
     {
         unityIconImg.gameObject.SetActive(false);
         unrealIconImg.gameObject.SetActive(false);
     }
 
-    public void Init(EngineType type, string version)
+    public void Init(EngineType type, string version, string localpath)
     {
+        SetAllActiveFalse();
+
         if (type == EngineType.UnityEngine)
         {
             unityIconImg.gameObject.SetActive(true);
@@ -41,6 +43,7 @@ public class EngineInfoUI : MonoBehaviour, IPointerClickHandler
             unrealIconImg.gameObject.SetActive(true);
         }
         versionText.text = version;
+        localPath = localpath;
     }
 
     /// <summary>

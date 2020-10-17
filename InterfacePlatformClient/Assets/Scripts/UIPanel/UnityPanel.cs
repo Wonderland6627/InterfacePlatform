@@ -1,8 +1,10 @@
 ﻿using System.IO;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.UI;
+using Debug = UnityEngine.Debug;
 
 public class UnityPanel : UIPanel
 {
@@ -32,6 +34,7 @@ public class UnityPanel : UIPanel
     /// Unity Editor版本和安装包下载地址
     /// </summary>
     private Dictionary<string, string> versionDownloadTable;//下载地址，检测本地没有安装包后使用
+    private List<EXEFileLocation> versionLocationsList;//编辑器地址，存储Editor路径
 
     private const string Prefix = "UnityDownloadAssistant-";
     private const string Suffix = ".exe";
@@ -59,6 +62,31 @@ public class UnityPanel : UIPanel
         versionDropdown.onValueChanged.AddListener(OnSelectVersionChanged);
 
         selectedVersion = versionDropdown.captionText.text;
+
+        InitAllUnityLocalVersion();
+    }
+
+    /// <summary>
+    /// 初始化所有本地有的版本UnityEditor
+    /// StreamingAsset下面存一个模板
+    /// </summary>
+    private void InitAllUnityLocalVersion()
+    {
+        versionLocationsList = new List<EXEFileLocation>();
+
+        string localEditorInfo = InterfacePlatformTools.ReadText(JsonType.UnityEditorLocalVersion);
+        if (string.IsNullOrEmpty(localEditorInfo))
+        {
+            return;
+        }
+
+        List<EXEFileLocation> exeLocations = InterfacePlatformTools.Deserialize<List<EXEFileLocation>>(localEditorInfo);
+        foreach (var item in exeLocations)
+        {
+            versionLocationsList.Add(new EXEFileLocation(item.filename, item.localpath));//存入字典 方便添加时覆盖
+            EngineInfoUI engineUI = Instantiate(engineUIPrefab, scrollContent) as EngineInfoUI;
+            engineUI.Init(EngineType.UnityEngine, item.filename, item.localpath);
+        }
     }
 
     private void OnAddVersionBtnClick()
@@ -73,18 +101,33 @@ public class UnityPanel : UIPanel
 
     private void OnForeachSuccess(string filePath)
     {
-        if(string.IsNullOrEmpty (filePath))
+        if (string.IsNullOrEmpty(filePath))
         {
             Debug.LogError("Editor选择路径为空");
             return;
         }
-        if(!filePath.EndsWith(@"Editor\Unity.exe"))
+        if (!filePath.EndsWith(@"Editor\Unity.exe"))
         {
             Debug.LogError("选择的不是Unity.exe");
             return;
         }
-        Debug.Log(filePath);
 
+        FileVersionInfo fileVerInfo = FileVersionInfo.GetVersionInfo(filePath);//获取exe版本信息
+        string version = string.Format("{0}.{1}.{2}", fileVerInfo.FileMajorPart, fileVerInfo.FileMinorPart, fileVerInfo.FileBuildPart);
+        AddLocalVersion(version, filePath);
+    }
+
+    /// <summary>
+    /// 添加本地已有版本
+    /// </summary>
+    private void AddLocalVersion(string version, string filePath)
+    {
+        EngineInfoUI engineUI = Instantiate(engineUIPrefab, scrollContent) as EngineInfoUI;
+        engineUI.Init(EngineType.UnityEngine, version, filePath);
+        versionLocationsList.Add(new EXEFileLocation(version, filePath));
+
+        string json = InterfacePlatformTools.Serialize(versionLocationsList);
+        InterfacePlatformTools.WriteBytes(JsonType.UnityEditorLocalVersion, json);
     }
 
     private void OnForeachFailed()
