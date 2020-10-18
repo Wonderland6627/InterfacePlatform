@@ -15,7 +15,7 @@ public enum EngineType
 /// </summary>
 public class EngineInfoUI : MonoBehaviour, IPointerClickHandler
 {
-    public string localPath;
+    public EXEFileLocation fileLocation;
 
     public Image unityIconImg;
     public Image unrealIconImg;
@@ -30,7 +30,7 @@ public class EngineInfoUI : MonoBehaviour, IPointerClickHandler
         unrealIconImg.gameObject.SetActive(false);
     }
 
-    public void Init(EngineType type, string version, string localpath)
+    public void Init(EngineType type, EXEFileLocation location)
     {
         SetAllActiveFalse();
 
@@ -42,8 +42,9 @@ public class EngineInfoUI : MonoBehaviour, IPointerClickHandler
         {
             unrealIconImg.gameObject.SetActive(true);
         }
-        versionText.text = version;
-        localPath = localpath;
+
+        fileLocation = location;
+        versionText.text = location.version;
     }
 
     /// <summary>
@@ -51,19 +52,21 @@ public class EngineInfoUI : MonoBehaviour, IPointerClickHandler
     /// </summary>
     private void RemoveVersion()
     {
-        string version = versionText.text;
+        string version = fileLocation.version;
         if(string.IsNullOrEmpty(version))
         {
             Debug.LogError("版本为空");
             return;
         }
+
+
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if(!string.IsNullOrEmpty(localPath))
+        if(!string.IsNullOrEmpty(fileLocation.localpath))
         {
-            CommonFunction.OpenFile(localPath);
+            CommonFunction.OpenFile(fileLocation.localpath);
         }
     }
 }

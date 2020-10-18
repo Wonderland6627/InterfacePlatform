@@ -19,14 +19,15 @@ public enum JsonType
 /// <summary>
 /// exe版本和本地路径存储
 /// </summary>
+[System.Serializable]
 public class EXEFileLocation
 {
-    public string filename;
+    public string version;
     public string localpath;
 
-    public EXEFileLocation(string _filename, string _localpath)
+    public EXEFileLocation(string _version, string _localpath)
     {
-        filename = _filename;
+        version = _version;
         localpath = _localpath;
     }
 }

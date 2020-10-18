@@ -83,9 +83,10 @@ public class UnityPanel : UIPanel
         List<EXEFileLocation> exeLocations = InterfacePlatformTools.Deserialize<List<EXEFileLocation>>(localEditorInfo);
         foreach (var item in exeLocations)
         {
-            versionLocationsList.Add(new EXEFileLocation(item.filename, item.localpath));//存入字典 方便添加时覆盖
+            var location = new EXEFileLocation(item.version, item.localpath);
+            versionLocationsList.Add(location);//存入字典 方便添加时覆盖
             EngineInfoUI engineUI = Instantiate(engineUIPrefab, scrollContent) as EngineInfoUI;
-            engineUI.Init(EngineType.UnityEngine, item.filename, item.localpath);
+            engineUI.Init(EngineType.UnityEngine, location);
         }
     }
 
@@ -114,17 +115,17 @@ public class UnityPanel : UIPanel
 
         FileVersionInfo fileVerInfo = FileVersionInfo.GetVersionInfo(filePath);//获取exe版本信息
         string version = string.Format("{0}.{1}.{2}", fileVerInfo.FileMajorPart, fileVerInfo.FileMinorPart, fileVerInfo.FileBuildPart);
-        AddLocalVersion(version, filePath);
+        AddAndSaveLocalVersion(new EXEFileLocation(version, filePath));
     }
 
     /// <summary>
     /// 添加本地已有版本
     /// </summary>
-    private void AddLocalVersion(string version, string filePath)
+    private void AddAndSaveLocalVersion(EXEFileLocation location)
     {
         EngineInfoUI engineUI = Instantiate(engineUIPrefab, scrollContent) as EngineInfoUI;
-        engineUI.Init(EngineType.UnityEngine, version, filePath);
-        versionLocationsList.Add(new EXEFileLocation(version, filePath));
+        engineUI.Init(EngineType.UnityEngine, location);
+        versionLocationsList.Add(location);
 
         string json = InterfacePlatformTools.Serialize(versionLocationsList);
         InterfacePlatformTools.WriteBytes(JsonType.UnityEditorLocalVersion, json);
@@ -175,7 +176,9 @@ public class UnityPanel : UIPanel
                 OpenUnityCN();
                 Debug.LogError("链接有误，前往官网");
             }
+            return;
         }
+
         CommonFunction.OpenFile(installerPath);
     }
 
