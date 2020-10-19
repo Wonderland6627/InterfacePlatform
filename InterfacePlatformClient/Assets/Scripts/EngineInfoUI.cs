@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.Events;
 
 public enum EngineType
 {
@@ -24,13 +25,7 @@ public class EngineInfoUI : MonoBehaviour, IPointerClickHandler
     [Header("移除此版本")]
     public Button removeVersionBtn;
 
-    private void SetAllActiveFalse()
-    {
-        unityIconImg.gameObject.SetActive(false);
-        unrealIconImg.gameObject.SetActive(false);
-    }
-
-    public void Init(EngineType type, EXEFileLocation location)
+    public void Init(EngineType type, EXEFileLocation location , UnityAction removeAction)
     {
         SetAllActiveFalse();
 
@@ -45,21 +40,14 @@ public class EngineInfoUI : MonoBehaviour, IPointerClickHandler
 
         fileLocation = location;
         versionText.text = location.version;
+
+        removeVersionBtn.onClick.AddListener(removeAction);
     }
 
-    /// <summary>
-    /// 移除此版本
-    /// </summary>
-    private void RemoveVersion()
+    private void SetAllActiveFalse()
     {
-        string version = fileLocation.version;
-        if(string.IsNullOrEmpty(version))
-        {
-            Debug.LogError("版本为空");
-            return;
-        }
-
-
+        unityIconImg.gameObject.SetActive(false);
+        unrealIconImg.gameObject.SetActive(false);
     }
 
     public void OnPointerClick(PointerEventData eventData)

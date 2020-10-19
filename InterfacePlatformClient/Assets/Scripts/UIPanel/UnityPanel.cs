@@ -86,7 +86,7 @@ public class UnityPanel : UIPanel
             var location = new EXEFileLocation(item.version, item.localpath);
             versionLocationsList.Add(location);//存入字典 方便添加时覆盖
             EngineInfoUI engineUI = Instantiate(engineUIPrefab, scrollContent) as EngineInfoUI;
-            engineUI.Init(EngineType.UnityEngine, location);
+            engineUI.Init(EngineType.UnityEngine, location, RemoveLocalVersion);
         }
     }
 
@@ -123,12 +123,23 @@ public class UnityPanel : UIPanel
     /// </summary>
     private void AddAndSaveLocalVersion(EXEFileLocation location)
     {
+        if (versionLocationsList.Exists((item) => { return item.version == location.version; }))//传入的location和list中已有的只是值相同 还是要通过version比较一下
+        {
+            Debug.LogError(location.version + "已添加");
+            return;
+        }
+
         EngineInfoUI engineUI = Instantiate(engineUIPrefab, scrollContent) as EngineInfoUI;
-        engineUI.Init(EngineType.UnityEngine, location);
+        engineUI.Init(EngineType.UnityEngine, location, RemoveLocalVersion);
         versionLocationsList.Add(location);
 
         string json = InterfacePlatformTools.Serialize(versionLocationsList);
         InterfacePlatformTools.WriteBytes(JsonType.UnityEditorLocalVersion, json);
+    }
+
+    private void RemoveLocalVersion()
+    {
+
     }
 
     private void OnForeachFailed()
