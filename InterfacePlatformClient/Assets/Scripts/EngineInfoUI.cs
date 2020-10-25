@@ -1,9 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-using UnityEngine.Events;
 
 public enum EngineType
 {
@@ -14,10 +14,8 @@ public enum EngineType
 /// <summary>
 /// 安装页面引擎选项卡，显示、记录各版本引擎本地路径
 /// </summary>
-public class EngineInfoUI : MonoBehaviour, IPointerClickHandler
+public class EngineInfoUI : UIBlockBase
 {
-    public EXEFileLocation fileLocation;
-
     public Image unityIconImg;
     public Image unrealIconImg;
     public Text versionText;
@@ -25,23 +23,24 @@ public class EngineInfoUI : MonoBehaviour, IPointerClickHandler
     [Header("移除此版本")]
     public Button removeVersionBtn;
 
-    public void Init(EngineType type, EXEFileLocation location , UnityAction removeAction)
+    public override void Init(Enum type, EXEFileLocation location)
     {
+        base.Init(type, location);
+
         SetAllActiveFalse();
 
-        if (type == EngineType.UnityEngine)
+        EngineType engineType = (EngineType)type;
+        if (engineType == EngineType.UnityEngine)
         {
             unityIconImg.gameObject.SetActive(true);
         }
-        else if (type == EngineType.UnrealEngine)
+        else if (engineType == EngineType.UnrealEngine)
         {
             unrealIconImg.gameObject.SetActive(true);
         }
 
         fileLocation = location;
         versionText.text = location.version;
-
-        removeVersionBtn.onClick.AddListener(removeAction);
     }
 
     private void SetAllActiveFalse()
@@ -50,8 +49,9 @@ public class EngineInfoUI : MonoBehaviour, IPointerClickHandler
         unrealIconImg.gameObject.SetActive(false);
     }
 
-    public void OnPointerClick(PointerEventData eventData)
+    public override void OnPointerClick(PointerEventData eventData)
     {
+        base.OnPointerClick(eventData);
         if(!string.IsNullOrEmpty(fileLocation.localpath))
         {
             CommonFunction.OpenFile(fileLocation.localpath);

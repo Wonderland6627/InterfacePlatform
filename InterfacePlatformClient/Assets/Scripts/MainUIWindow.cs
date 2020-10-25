@@ -26,6 +26,9 @@ public class MainUIWindow : MonoBehaviour
     [Header("主页")]
     public MainPanel mainPanel;
 
+    [Header("库面板")]
+    public LibraryPanel libraryPanel;
+
     [Header("引擎面板")]
     public EnginePanel enginePanel;
 
@@ -37,13 +40,16 @@ public class MainUIWindow : MonoBehaviour
     public void InitWindow()
     {
         mainTogBtn.Init(mainTogGroup, mainPanel.gameObject);
-        libraryTogBtn.Init(mainTogGroup);
+        libraryTogBtn.Init(mainTogGroup, libraryPanel.gameObject);
         engineTogBtn.Init(mainTogGroup, enginePanel.gameObject);
         downLoadTogBtn.Init(mainTogGroup);
         settingTog.Init(mainTogGroup);
 
         mainPanel.InitPanel();
         mainPanel.gameObject.SetActive(false);
+
+        libraryPanel.InitPanel();
+        libraryPanel.gameObject.SetActive(false);
 
         enginePanel.InitPanel();
         enginePanel.gameObject.SetActive(false);

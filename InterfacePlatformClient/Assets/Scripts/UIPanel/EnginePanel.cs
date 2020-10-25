@@ -20,10 +20,11 @@ public class EnginePanel : UIPanel
     {
         base.InitPanel();
 
-        unityTogBtn.Init(titleTogGroup);
+        unityTogBtn.Init(titleTogGroup, unityPanel.gameObject);
         unrealTogBtn.Init(titleTogGroup);
 
         unityPanel.InitPanel();
+        unityPanel.gameObject.SetActive(false);
 
         unityTogBtn.Select();
     }

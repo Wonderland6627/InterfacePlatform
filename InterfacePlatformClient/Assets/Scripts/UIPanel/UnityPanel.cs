@@ -86,7 +86,7 @@ public class UnityPanel : UIPanel
             var location = new EXEFileLocation(item.version, item.localpath);
             versionLocationsList.Add(location);//存入字典 方便添加时覆盖
             EngineInfoUI engineUI = Instantiate(engineUIPrefab, scrollContent) as EngineInfoUI;
-            engineUI.Init(EngineType.UnityEngine, location, RemoveLocalVersion);
+            engineUI.Init(EngineType.UnityEngine, location);
         }
     }
 
@@ -130,7 +130,7 @@ public class UnityPanel : UIPanel
         }
 
         EngineInfoUI engineUI = Instantiate(engineUIPrefab, scrollContent) as EngineInfoUI;
-        engineUI.Init(EngineType.UnityEngine, location, RemoveLocalVersion);
+        engineUI.Init(EngineType.UnityEngine, location);
         versionLocationsList.Add(location);
 
         string json = InterfacePlatformTools.Serialize(versionLocationsList);
