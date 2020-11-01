@@ -65,6 +65,18 @@ public class InterfacePlatformTools
     }
 
     /// <summary>
+    /// 清理所有json文件
+    /// </summary>
+    public static void DeleteJsonFiles()
+    {
+        DirectoryInfo directoryInfo = new DirectoryInfo(JsonPrefix);
+        foreach (var file in directoryInfo.GetFiles())
+        {
+            file.Delete();
+        }
+    }
+
+    /// <summary>
     /// 确保文件的读写
     /// </summary>
     /// <param name="fileName"></param>
@@ -83,15 +95,6 @@ public class InterfacePlatformTools
     /// <summary>
     /// 读取Json
     /// </summary>
-    public static byte[] ReadBytes(JsonType fileName)
-    {
-        var jsonPath = GetJsonFilePath(fileName);
-        MakeSureWriteOrRead(fileName);
-        var bytes = File.ReadAllBytes(jsonPath);
-
-        return bytes;
-    }
-
     public static string ReadText(JsonType fileName)
     {
         var jsonPath = GetJsonFilePath(fileName);
