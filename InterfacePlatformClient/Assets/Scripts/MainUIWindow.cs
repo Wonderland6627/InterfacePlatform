@@ -32,6 +32,9 @@ public class MainUIWindow : MonoBehaviour
     [Header("引擎面板")]
     public EnginePanel enginePanel;
 
+    [Header("下载面板")]
+    public DownloadPanel downloadPanel;
+
     private void Start()
     {
         InitWindow();
@@ -42,26 +45,14 @@ public class MainUIWindow : MonoBehaviour
         mainTogBtn.Init(mainTogGroup, mainPanel.gameObject);
         libraryTogBtn.Init(mainTogGroup, libraryPanel.gameObject);
         engineTogBtn.Init(mainTogGroup, enginePanel.gameObject);
-        downLoadTogBtn.Init(mainTogGroup);
+        downLoadTogBtn.Init(mainTogGroup, downloadPanel.gameObject);
         settingTog.Init(mainTogGroup);
 
         mainPanel.InitPanel();
-        mainPanel.gameObject.SetActive(false);
-
         libraryPanel.InitPanel();
-        libraryPanel.gameObject.SetActive(false);
-
         enginePanel.InitPanel();
-        enginePanel.gameObject.SetActive(false);
+        downloadPanel.InitPanel();
 
         mainTogBtn.Select();
-    }
-
-    /// <summary>
-    /// 点击引擎面板
-    /// </summary>
-    private void OnEngineTogBtnClick()
-    {
-
     }
 }

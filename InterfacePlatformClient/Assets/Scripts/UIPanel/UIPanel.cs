@@ -25,5 +25,6 @@ public class UIPanel : MonoBehaviour
     public virtual void ClosePanel()
     {
         isResume = true;
+        gameObject.SetActive(false);
     }
 }

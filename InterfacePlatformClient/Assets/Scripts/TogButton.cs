@@ -18,6 +18,7 @@ public class TogButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
     public Toggle toggle;
     public ToggleGroup toggleGroup;
+
     private bool isSelect = false;
     public bool IsSelect
     {
@@ -49,7 +50,10 @@ public class TogButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
     private CanvasGroup canvasGroup;
 
-    private void Awake()
+    /// <summary>
+    /// 使用预初始化代替Awake
+    /// </summary>
+    private void PreInit()
     {
         toggle = GetComponent<Toggle>();
         toggle.onValueChanged.AddListener(OnToggleValueChanged);
@@ -67,6 +71,7 @@ public class TogButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     /// </summary>
     public void Init(ToggleGroup group, GameObject controlGo = null)
     {
+        PreInit();
         BindGroup(group);
         if (controlGo)
         {
