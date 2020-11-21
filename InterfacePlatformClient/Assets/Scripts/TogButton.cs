@@ -10,11 +10,11 @@ public class OnClickEvent : UnityEvent { }
 /// </summary>
 [RequireComponent(typeof(Toggle))]
 [RequireComponent(typeof(CanvasGroup))]
-public class TogButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
+public class TogButton : MonoBehaviour , IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     //public Action OnClickEvent;
     private OnClickEvent onClick = new OnClickEvent();
-    private GameObject inControlGo;//被控制的物体
+    protected GameObject inControlGo;//被控制的物体
 
     public Toggle toggle;
     public ToggleGroup toggleGroup;
@@ -31,20 +31,26 @@ public class TogButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             isSelect = value;
             if (isSelect)
             {
-                ApplayColor(highLightColor);
+                ApplyStateChanged(clickedSprite, clcikedColor);
             }
             else
             {
-                ApplayColor(normalColor);
+                ApplyStateChanged(normalSprite, normalColor);
             }
-            ApplyController();
+            OnApplySelected();
         }
     }
 
+    [Header("需要改变图片属性的UI")]
+    public Image[] imageGraphics;
+    public Sprite normalSprite;
+    public Sprite clickedSprite;
+
     [Header("需要改变颜色的UI")]
-    public Graphic[] graphics;
+    public Graphic[] colorGraphics;
     public Color normalColor = new Color(155, 155, 155, 255);
-    public Color highLightColor = Color.white;
+    public Color clcikedColor = Color.white;
+
     public float normalAlaph = 1;
     public float highLightAlaph = 1;
 
@@ -63,22 +69,27 @@ public class TogButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             canvasGroup = gameObject.AddComponent<CanvasGroup>();
         }
         canvasGroup.alpha = normalAlaph;
-        ApplayColor(normalColor);
+        ApplyStateChanged(normalSprite, normalColor);
     }
 
     /// <summary>
     /// 初始化选钮
     /// </summary>
-    public void Init(ToggleGroup group, GameObject controlGo = null)
+    public virtual void Init(object param = null)
     {
         PreInit();
+    }  
+
+    public virtual void Init(ToggleGroup group, object param = null)
+    {
+        Init();
         BindGroup(group);
-        if (controlGo)
-        {
-            inControlGo = controlGo;
-        }
     }
 
+    /// <summary>
+    /// Bind方法必须在base.Init()之后调用
+    /// </summary>
+    /// <param name="group"></param>
     private void BindGroup(ToggleGroup group)
     {
         toggle.group = group;
@@ -91,26 +102,32 @@ public class TogButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     }
 
     /// <summary>
-    /// 所控制物体的显隐
+    /// 点击事件
     /// </summary>
-    private void ApplyController()
+    public virtual void OnApplySelected()
     {
-        if (inControlGo)
-        {
-            inControlGo.SetActive(isSelect);
-        }
+        
     }
 
-    private void ApplayColor(Color color)
+    private void ApplyStateChanged(Sprite sprite, Color color)
     {
-        if (graphics.Length == 0)
+        if (imageGraphics.Length > 0)
         {
-            return;
+            for (int i = 0; i < imageGraphics.Length; i++)
+            {
+                if (sprite != null)
+                {
+                    imageGraphics[i].sprite = sprite;
+                }
+            }
         }
 
-        for (int i = 0; i < graphics.Length; i++)
+        if (colorGraphics.Length > 0)
         {
-            graphics[i].color = color;
+            for (int i = 0; i < colorGraphics.Length; i++)
+            {
+                colorGraphics[i].color = color;
+            }
         }
     }
 
@@ -121,25 +138,25 @@ public class TogButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (toggle.IsInteractable() && !isSelect)
+        if (toggle && toggle.IsInteractable() && !isSelect)
         {
             canvasGroup.alpha = highLightAlaph;
-            ApplayColor(highLightColor);
+            ApplyStateChanged(clickedSprite, clcikedColor);
         }
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (toggle.IsInteractable() && !isSelect)
+        if (toggle && toggle.IsInteractable() && !isSelect)
         {
             canvasGroup.alpha = normalAlaph;
-            ApplayColor(normalColor);
+            ApplyStateChanged(normalSprite, normalColor);
         }
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (toggle.IsInteractable() && !isSelect)
+        if (toggle && toggle.IsInteractable() && !isSelect)
         {
             onClick?.Invoke();
         }
@@ -148,7 +165,7 @@ public class TogButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
 public static class TogButtonEx
 {
-    public static void Select(this TogButton togButton)
+    public static void Select(this OptionTogButton togButton)
     {
         if (togButton)
         {
