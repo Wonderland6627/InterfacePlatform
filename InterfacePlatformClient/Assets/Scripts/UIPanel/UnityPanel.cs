@@ -39,7 +39,7 @@ public class UnityPanel : UIPanel
     private const string Prefix = "UnityDownloadAssistant-";
     private const string Suffix = ".exe";
 
-    public override void InitPanel()
+    public override void InitPanel(object param = null)
     {
         base.InitPanel();
 

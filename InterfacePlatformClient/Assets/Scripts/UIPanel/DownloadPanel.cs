@@ -11,15 +11,15 @@ public class DownloadPanel : UIPanel
     [Header("下载进度条")]
     public DownloadProgressBar downLoadPrgressBarPrefab;
 
-    public override void InitPanel()
+    public override void InitPanel(object param = null)
     {
         base.InitPanel();
 
-        closeBtn.onClick.AddListener(ClosePanel);
+        closeBtn.onClick.AddListener(HidePanel);
     }
 
-    public override void ClosePanel()
+    public override void HidePanel()
     {
-        base.ClosePanel();
+        base.HidePanel();
     }
 }

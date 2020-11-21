@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MainPanel : UIPanel
 {
-    public override void InitPanel()
+    public override void InitPanel(object param = null)
     {
         base.InitPanel();
     }

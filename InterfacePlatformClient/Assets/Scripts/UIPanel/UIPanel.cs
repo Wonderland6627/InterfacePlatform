@@ -9,7 +9,7 @@ public class UIPanel : MonoBehaviour
 
     private bool isResume = false;//需要被刷新
 
-    public virtual void InitPanel() { }
+    public virtual void InitPanel(object param = null) { }
 
     protected virtual void OnEnable()
     {
@@ -22,9 +22,15 @@ public class UIPanel : MonoBehaviour
 
     public virtual void OnResume() { }
 
-    public virtual void ClosePanel()
+    public virtual void HidePanel()
     {
         isResume = true;
         gameObject.SetActive(false);
+    }
+
+    public virtual void ClosePanel()
+    {
+        UIManager.GetInstance().RemovePanel(this);
+        Destroy(gameObject);
     }
 }

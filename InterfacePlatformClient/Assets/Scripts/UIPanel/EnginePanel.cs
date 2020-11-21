@@ -6,17 +6,17 @@ using UnityEngine.UI;
 public class EnginePanel : UIPanel
 {
     [Header("UnityTog")]
-    public TogButton unityTogBtn;
+    public OptionTogButton unityTogBtn;
 
     [Header("UnrealTog")]
-    public TogButton unrealTogBtn;
+    public OptionTogButton unrealTogBtn;
 
     public ToggleGroup titleTogGroup;
 
     [Header("Unity面板")]
     public UnityPanel unityPanel;
 
-    public override void InitPanel()
+    public override void InitPanel(object param = null)
     {
         base.InitPanel();
 

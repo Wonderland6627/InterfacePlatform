@@ -22,7 +22,7 @@ public class MessageParam
 
 public class MessagePanel : UIPanel
 {
-    public void InitPanel(object param = null)
+    public override void InitPanel(object param = null)
     {
         base.InitPanel();
     }

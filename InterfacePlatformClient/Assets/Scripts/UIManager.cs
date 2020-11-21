@@ -29,10 +29,12 @@ public class UIManager : MonoBehaviour
         return null;
     }
 
-    public List<UIPanel> uiPanelsList;
+    public List<UIPanel> UIPanelsList;
 
     [Header("顶层UI")]
-    public Transform topUIRoot;
+    public Transform TopUIRoot;
+    [Header("主面板的右侧位置")]
+    public Transform UIPanelRoot;
 
     private void Awake()
     {
@@ -52,7 +54,76 @@ public class UIManager : MonoBehaviour
 
     private void Init()
     {
-        uiPanelsList = new List<UIPanel>();
+        UIPanelsList = new List<UIPanel>();
+        for (int i = 0; i < UIPanelRoot.childCount; i++)
+        {
+            UIPanelsList.Add(UIPanelRoot.GetChild(i).GetComponent<UIPanel>());
+        }
+    }
+
+    //指定parent
+    public bool OpenPanel<T>(string path, object openParam = null, Transform parent = null) where T : UIPanel
+    {
+        T panelRes = Resources.Load<T>(path) as T;
+        if (panelRes != null)
+        {
+            Instantiate(panelRes, parent == null ? UIPanelRoot : parent);
+            panelRes.InitPanel(openParam);
+            UIPanelsList.Add(panelRes);
+
+            return true;
+        }
+
+        return false;
+    }
+
+    public T LoadUI<T>(string path) where T : UnityEngine.Object
+    {
+        T instance = null;
+        T loadRes = Resources.Load<T>(path);
+        if (loadRes != null)
+        {
+            instance = Instantiate(loadRes);
+        }
+
+        return instance;
+    }
+
+    public void RemovePanel(UIPanel panel)
+    {
+        UIPanelsList.Remove(panel);
+    }
+
+    /// <summary>
+    /// 获取右侧最上层面板
+    /// </summary>
+    /// <returns></returns>
+    public UIPanel GetTopRightUIPanel()
+    {
+        if (UIPanelRoot.childCount == 0)
+        {
+            Debug.Log("无TopPanel");
+
+            return null;
+        }
+
+        return UIPanelRoot.GetChild(UIPanelRoot.childCount - 1).GetComponent<UIPanel>();
+    }
+
+    /// <summary>
+    /// 获取最上层面板
+    /// </summary>
+    /// <returns></returns>
+    public UIPanel GetTopUIPanel()
+    {
+        if (TopUIRoot.childCount == 0)
+        {
+            Debug.Log("无TopPanel");
+
+            return null;
+        }
+
+        return TopUIRoot.GetChild(TopUIRoot.childCount - 1).GetComponent<UIPanel>();
     }
 
     /// <summary>
@@ -61,7 +132,7 @@ public class UIManager : MonoBehaviour
     private void ShowMessagePanel(MessageParam param)
     {
         MessagePanel messagePanel = Resources.Load<MessagePanel>("UIPanel/MessagePanel");
-        if(messagePanel == null)
+        if (messagePanel == null)
         {
             Debug.LogError("提示窗加载失败");
             return;
