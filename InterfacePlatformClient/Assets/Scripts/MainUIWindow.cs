@@ -6,19 +6,22 @@ using UnityEngine.UI;
 public class MainUIWindow : MonoBehaviour
 {
     [Header("主页Tog")]
-    public TogButton mainTogBtn;
+    public OptionTogButton mainTogBtn;
 
     [Header("库Tog")]
-    public TogButton libraryTogBtn;
+    public OptionTogButton libraryTogBtn;
 
     [Header("引擎Tog")]
-    public TogButton engineTogBtn;
+    public OptionTogButton engineTogBtn;
+
+    [Header("驱动Tog")]
+    public OptionTogButton driveTogBtn;
 
     [Header("下载Tog")]
-    public TogButton downLoadTogBtn;
+    public OptionTogButton downLoadTogBtn;
 
     [Header("设置Tog")]
-    public TogButton settingTog;
+    public OptionTogButton settingTogBtn;
 
     [Header("ToggleGroup")]
     public ToggleGroup mainTogGroup;
@@ -31,6 +34,9 @@ public class MainUIWindow : MonoBehaviour
 
     [Header("引擎面板")]
     public EnginePanel enginePanel;
+
+    [Header("驱动面板")]
+    public DrivePanel drivePanel;
 
     [Header("下载面板")]
     public DownloadPanel downloadPanel;
@@ -45,12 +51,14 @@ public class MainUIWindow : MonoBehaviour
         mainTogBtn.Init(mainTogGroup, mainPanel.gameObject);
         libraryTogBtn.Init(mainTogGroup, libraryPanel.gameObject);
         engineTogBtn.Init(mainTogGroup, enginePanel.gameObject);
+        driveTogBtn.Init(mainTogGroup, drivePanel.gameObject);
         downLoadTogBtn.Init(mainTogGroup, downloadPanel.gameObject);
-        settingTog.Init(mainTogGroup);
+        settingTogBtn.Init(mainTogGroup);
 
         mainPanel.InitPanel();
         libraryPanel.InitPanel();
         enginePanel.InitPanel();
+        drivePanel.InitPanel();
         downloadPanel.InitPanel();
 
         mainTogBtn.Select();

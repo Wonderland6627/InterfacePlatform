@@ -14,6 +14,7 @@ public enum JsonType
     UnityEditorLocalVersion,
     UnrealEditorLocalVersion,
     GameLibraryLocalVersion,
+    LibraryProductsInfo,//库的软件名
 }
 
 /// <summary>

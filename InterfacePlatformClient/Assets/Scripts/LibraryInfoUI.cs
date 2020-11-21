@@ -3,31 +3,34 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-using System;
 
-public enum LibraryType
+public class ProductInfoOpenParam
 {
-    PC,
-    VR,
-    LeapMotion,
-    Kinect,
+    public string productName;
 }
 
-public class LibraryInfoUI : UIBlockBase 
+/// <summary>
+/// Product Block产品展示块
+/// </summary>
+public class LibraryInfoUI : MonoBehaviour, IPointerClickHandler
 {
-    public override void Init(Enum type, EXEFileLocation location)
-    {
-        base.Init(type, location);
+    public Text productName;
+    public Text companyName;
+    public Text classify;
 
-        LibraryType libraryType = (LibraryType)type;
+    public Button favorBtn;
+
+    public Transform productInfoRoot;
+
+    public void Init(Transform infoRoot)
+    {
+        productInfoRoot = infoRoot;
     }
 
-    public override void OnPointerClick(PointerEventData eventData)
+    public void OnPointerClick(PointerEventData eventData)
     {
-        base.OnPointerClick(eventData);
-        if (!string.IsNullOrEmpty(fileLocation.localpath))
-        {
-            CommonFunction.OpenFile(fileLocation.localpath);
-        }
+        UIManager.GetInstance().OpenPanel<ProductInfoPanel>(IPResDictionary.ProductInfoPanel,
+            new ProductInfoOpenParam() { productName = this.productName.text },
+            productInfoRoot);
     }
 }
