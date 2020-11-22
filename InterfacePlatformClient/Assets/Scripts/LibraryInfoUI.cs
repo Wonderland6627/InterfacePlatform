@@ -31,7 +31,10 @@ public class LibraryInfoUI : MonoBehaviour, IPointerClickHandler
     public void Init(ProductInfo info, Transform infoRoot)
     {
         Sprite[] sprites = LibraryManager.GetInstance().GetProductPreviewTextures(info.ProductName);
-        previewImg.SetSprite(sprites[0]);
+        if(sprites != null && sprites.Length>0)
+        {
+            previewImg.SetSprite(sprites[0]);
+        }
 
         this.info = info;
 

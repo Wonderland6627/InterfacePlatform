@@ -40,7 +40,7 @@ public class InterfacePlatformTools
     /// </summary>
     public static string JsonPrefix = Application.persistentDataPath + "/JsonData";
 
-    private static string GetJsonFilePath(JsonType fileName)
+    public static string GetJsonFilePath(JsonType fileName)
     {
         string filePath = string.Format("{0}/{1}.json", JsonPrefix, fileName.ToString());
 

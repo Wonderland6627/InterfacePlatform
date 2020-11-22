@@ -123,12 +123,17 @@ public class LibraryManager : GenericSingleton<LibraryManager>
         return info;
     }
 
+    public static string GetProductRootDirPath()
+    {
+        return string.Format("{0}/{1}/", Application.persistentDataPath, "Products");
+    }
+
     /// <summary>
     /// 产品文件夹路径
     /// </summary>
     private string GetProductDirPath(string productName)
     {
-        return string.Format("{0}/{1}/{2}/", Application.persistentDataPath, "Products", productName);
+        return string.Format("{0}/{1}/", GetProductRootDirPath(), productName);
     }
 
     private string GetProductInfoJsonPath(string productName)

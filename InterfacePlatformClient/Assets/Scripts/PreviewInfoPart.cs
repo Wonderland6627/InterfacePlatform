@@ -18,6 +18,9 @@ public class PreviewInfoPart : MonoBehaviour
     public void Init(ProductInfo info)
     {
         Sprite[] sprites = LibraryManager.GetInstance().GetProductPreviewTextures(info.ProductName);
-        mainPreviewImg.SetSprite(sprites[0]);
+        if (sprites != null && sprites.Length > 0)
+        {
+            mainPreviewImg.SetSprite(sprites[0]);
+        }
     }
 }
