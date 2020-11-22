@@ -52,6 +52,11 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        Init();
+    }
+
     private void Init()
     {
         UIPanelsList = new List<UIPanel>();
@@ -62,19 +67,17 @@ public class UIManager : MonoBehaviour
     }
 
     //指定parent
-    public bool OpenPanel<T>(string path, object openParam = null, Transform parent = null) where T : UIPanel
+    public T OpenPanel<T>(string path, object openParam = null, Transform parent = null) where T : UIPanel
     {
-        T panelRes = Resources.Load<T>(path) as T;
-        if (panelRes != null)
+        T panel = Resources.Load<T>(path) as T;
+        if (panel != null)
         {
-            Instantiate(panelRes, parent == null ? UIPanelRoot : parent);
-            panelRes.InitPanel(openParam);
-            UIPanelsList.Add(panelRes);
-
-            return true;
+            panel = Instantiate(panel, parent == null ? UIPanelRoot : parent);
+            panel.InitPanel(openParam);
+            UIPanelsList.Add(panel);
         }
 
-        return false;
+        return panel;
     }
 
     public T LoadUI<T>(string path) where T : UnityEngine.Object

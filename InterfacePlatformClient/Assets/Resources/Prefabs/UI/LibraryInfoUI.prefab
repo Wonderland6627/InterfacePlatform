@@ -106,6 +106,7 @@ GameObject:
   - component: {fileID: 224866193343859680}
   - component: {fileID: 222414236174174004}
   - component: {fileID: 114748205860371716}
+  - component: {fileID: 114594475980271176}
   m_Layer: 5
   m_Name: FavorBtn
   m_TagString: Untagged
@@ -539,6 +540,47 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114594475980271176
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1527697864778538}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 114748205860371716}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &114686137682720562
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -664,9 +706,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f3fe93f7bc474045988156bffceb3e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fileLocation:
-    version: 
-    localpath: 
+  previewImg: {fileID: 114382805198774784}
+  productName: {fileID: 114887661245081150}
+  companyName: {fileID: 114211105448230616}
+  classify: {fileID: 114249070767569634}
+  favorBtn: {fileID: 114594475980271176}
+  productInfoRoot: {fileID: 0}
 --- !u!222 &222168657643867502
 CanvasRenderer:
   m_ObjectHideFlags: 1
@@ -844,8 +889,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -109.3}
-  m_SizeDelta: {x: 0, y: 218.6}
+  m_AnchoredPosition: {x: 0, y: -76.84999}
+  m_SizeDelta: {x: 0, y: 153.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224364758117249274
 RectTransform:
@@ -865,8 +910,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 136.5, y: -217.2}
-  m_SizeDelta: {x: 200, y: 350}
+  m_AnchoredPosition: {x: 136.5, y: -217.04}
+  m_SizeDelta: {x: 200, y: 290}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224485053893359556
 RectTransform:

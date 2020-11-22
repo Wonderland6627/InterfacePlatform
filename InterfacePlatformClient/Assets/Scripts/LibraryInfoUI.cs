@@ -4,33 +4,46 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class ProductInfoOpenParam
-{
-    public string productName;
-}
-
 /// <summary>
 /// Product Block产品展示块
 /// </summary>
 public class LibraryInfoUI : MonoBehaviour, IPointerClickHandler
 {
+    public Image previewImg;
+
     public Text productName;
     public Text companyName;
     public Text classify;
 
     public Button favorBtn;
 
-    public Transform productInfoRoot;
+    private Transform productInfoRoot;
 
-    public void Init(Transform infoRoot)
+    private ProductInfo info;
+    public ProductInfo ProductInfo
     {
+        get
+        {
+            return info;
+        }
+    }
+
+    public void Init(ProductInfo info, Transform infoRoot)
+    {
+        Sprite[] sprites = LibraryManager.GetInstance().GetProductPreviewTextures(info.ProductName);
+        previewImg.SetSprite(sprites[0]);
+
+        this.info = info;
+
+        productName.SetText(info.ProductName);
+        companyName.SetText(info.CompanyName);
+        classify.SetText(info.ClassifiesToString());
+
         productInfoRoot = infoRoot;
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        UIManager.GetInstance().OpenPanel<ProductInfoPanel>(IPResDictionary.ProductInfoPanel,
-            new ProductInfoOpenParam() { productName = this.productName.text },
-            productInfoRoot);
+        UIManager.GetInstance().OpenPanel<ProductInfoPanel>(IPResDictionary.ProductInfoPanel, info, productInfoRoot);
     }
 }

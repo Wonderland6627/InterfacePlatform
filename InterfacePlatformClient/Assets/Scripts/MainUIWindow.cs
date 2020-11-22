@@ -41,7 +41,7 @@ public class MainUIWindow : MonoBehaviour
     [Header("下载面板")]
     public DownloadPanel downloadPanel;
 
-    private void Start()
+    public void Init()
     {
         InitWindow();
     }

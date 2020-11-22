@@ -27,6 +27,6 @@ public class ClassifyTogButton : TogButton
     public override void OnApplySelected()
     {
         base.OnApplySelected();
-        Debug.Log(toggle.isOn + " " + classifyTag);
+        LibraryManager.GetInstance().OnKeywordsChanged(classifyTag, IsSelect);
     }
 }

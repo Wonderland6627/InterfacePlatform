@@ -1,6 +1,0 @@
-{
-  "ProductName": "Luxury Cruise Ship",
-  "CompanyName": "PLE",
-  "Classify": "Standalone",
-  "Description": "Low-poly, super lightweight model of a luxury cruise ship. Can be used for virtually anything, from decorating archviz scenes to mobile games. Materials set up for Unity's Standard Shader system. All images rendered in Unity!\nModel stats:\n8831 triangles | 282 triangles LOD\n2048x1024 texture set\nPackage includes:\n- Model set up in prefabs\n- 2 color variations\n- Template for modifying the textures with your custom ship name / company logo\nAdditional goodies:\n- Comes set up with rotating radar antennas\n- Illumination map for nice night scenes"
-}

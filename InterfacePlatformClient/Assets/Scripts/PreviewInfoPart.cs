@@ -8,11 +8,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PreviewInfoPart : MonoBehaviour 
+public class PreviewInfoPart : MonoBehaviour
 {
     [Header("主预览图")]
-    public RawImage mainPreviewImg;
+    public Image mainPreviewImg;
     [Header("小缩略图")]
-    public OptionTogButton[] thumbnailBtns;
+    public Image[] thumbnailBtns;
 
+    public void Init(ProductInfo info)
+    {
+        Sprite[] sprites = LibraryManager.GetInstance().GetProductPreviewTextures(info.ProductName);
+        mainPreviewImg.SetSprite(sprites[0]);
+    }
 }

@@ -14,7 +14,7 @@ public enum JsonType
     UnityEditorLocalVersion,
     UnrealEditorLocalVersion,
     GameLibraryLocalVersion,
-    LibraryProductsInfo,//库的软件名
+    LibraryProductsList,//库的软件名
 }
 
 /// <summary>
@@ -114,6 +114,11 @@ public class InterfacePlatformTools
         MakeSureWriteOrRead(fileName);
 
         File.WriteAllText(jsonPath, json);
+    }
+
+    public static string ReadText(string filePath)
+    {
+        return File.ReadAllText(filePath);
     }
 
     public static T Deserialize<T>(string value)
