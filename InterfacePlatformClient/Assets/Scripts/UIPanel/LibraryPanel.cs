@@ -46,6 +46,11 @@ public class LibraryPanel : UIPanel
     private void InitAllLibraryInfoUIs()
     {
         var productList = LibraryManager.Instance.ProductsList;//产品名列表
+        if (productList == null || productList.Count == 0)
+        {
+            return;
+        }
+
         foreach (var productName in productList)
         {
             var infoUI = UIManager.Instance.LoadUI<LibraryInfoUI>(IPResDictionary.LibraryInfoUI);

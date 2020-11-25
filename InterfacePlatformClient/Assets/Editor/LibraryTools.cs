@@ -14,6 +14,8 @@ public class LibraryTools
          string description,
          string filePath)
     {
+        InterfacePlatformTools.CreateJsonFiles();
+
         string dirRootPath = LibraryManager.GetProductRootDirPath();
         if (!Directory.Exists(dirRootPath))
         {
@@ -46,13 +48,18 @@ public class LibraryTools
         Debug.Log("创建完成");
 
         string productDirListstr = InterfacePlatformTools.ReadText(JsonType.LibraryProductsList);
-        var list = InterfacePlatformTools.Deserialize<LibraryManager.ProductsDirList>(productDirListstr);
-        if (!list.Products.Contains(productName))
+        LibraryManager.ProductsDirList productsDirList = new LibraryManager.ProductsDirList();
+        if (!string.IsNullOrEmpty(productDirListstr))//如果之前有内容
         {
-            list.Products.Add(productName);
-            string newProductDirListstr = InterfacePlatformTools.Serialize(list);
-            File.WriteAllText(InterfacePlatformTools.GetJsonFilePath(JsonType.LibraryProductsList), newProductDirListstr, System.Text.Encoding.UTF8);
+            productsDirList = InterfacePlatformTools.Deserialize<LibraryManager.ProductsDirList>(productDirListstr);
         }
+        if (!productsDirList.Products.Contains(productName))
+        {
+            productsDirList.Products.Add(productName);
+        }
+
+        string newProductDirListstr = InterfacePlatformTools.Serialize(productsDirList);
+        File.WriteAllText(InterfacePlatformTools.GetJsonFilePath(JsonType.LibraryProductsList), newProductDirListstr, System.Text.Encoding.UTF8);
     }
 }
 

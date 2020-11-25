@@ -36,6 +36,11 @@ public class LibraryManager : GenericSingleton<LibraryManager>
     public class ProductsDirList
     {
         public List<string> Products;
+
+        public ProductsDirList()
+        {
+            Products = new List<string>();
+        }
     }
 
     public List<string> ProductsList
