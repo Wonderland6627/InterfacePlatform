@@ -2877,6 +2877,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   desc: "\u5E93\u9762\u677F\u4FE1\u606F\u5217\u8868 \u5728\u8FD9\u91CC\u5C55\u793A\u7B5B\u9009\u51FA\u6765\u7684Block"
   blockRoot: {fileID: 224002315561252612}
+  libUIinfosList: []
 --- !u!114 &114986527000465172
 MonoBehaviour:
   m_ObjectHideFlags: 1

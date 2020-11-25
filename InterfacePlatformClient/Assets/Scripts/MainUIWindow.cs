@@ -26,6 +26,7 @@ public class MainUIWindow : MonoBehaviour
     [Header("ToggleGroup")]
     public ToggleGroup mainTogGroup;
 
+
     [Header("主页")]
     public MainPanel mainPanel;
 
@@ -40,6 +41,9 @@ public class MainUIWindow : MonoBehaviour
 
     [Header("下载面板")]
     public DownloadPanel downloadPanel;
+
+    [Header("设置面板")]
+    public SettingsPanel settingsPanel;
 
     public void Init()
     {
@@ -60,6 +64,7 @@ public class MainUIWindow : MonoBehaviour
         enginePanel.InitPanel();
         drivePanel.InitPanel();
         downloadPanel.InitPanel();
+        settingsPanel.InitPanel();
 
         mainTogBtn.Select();
     }
