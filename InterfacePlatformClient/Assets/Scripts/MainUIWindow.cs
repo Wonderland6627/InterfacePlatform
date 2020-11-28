@@ -23,9 +23,11 @@ public class MainUIWindow : MonoBehaviour
     [Header("设置Tog")]
     public OptionTogButton settingTogBtn;
 
+    [Header("个人Tog")]
+    public OptionTogButton mineTogBtn;
+
     [Header("ToggleGroup")]
     public ToggleGroup mainTogGroup;
-
 
     [Header("主页")]
     public MainPanel mainPanel;
@@ -45,6 +47,9 @@ public class MainUIWindow : MonoBehaviour
     [Header("设置面板")]
     public SettingsPanel settingsPanel;
 
+    [Header("个人面板")]
+    public MinePanel minePanel;
+
     public void Init()
     {
         InitWindow();
@@ -57,7 +62,8 @@ public class MainUIWindow : MonoBehaviour
         engineTogBtn.Init(mainTogGroup, enginePanel.gameObject);
         driveTogBtn.Init(mainTogGroup, drivePanel.gameObject);
         downLoadTogBtn.Init(mainTogGroup, downloadPanel.gameObject);
-        settingTogBtn.Init(mainTogGroup);
+        settingTogBtn.Init(mainTogGroup ,settingsPanel.gameObject);
+        mineTogBtn.Init(mainTogGroup, minePanel.gameObject);
 
         mainPanel.InitPanel();
         libraryPanel.InitPanel();
@@ -65,6 +71,7 @@ public class MainUIWindow : MonoBehaviour
         drivePanel.InitPanel();
         downloadPanel.InitPanel();
         settingsPanel.InitPanel();
+        minePanel.InitPanel();
 
         mainTogBtn.Select();
     }

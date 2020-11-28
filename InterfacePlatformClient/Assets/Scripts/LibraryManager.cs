@@ -151,6 +151,11 @@ public class LibraryManager : GenericSingleton<LibraryManager>
         return GetProductDirPath(productName) + "Preview/";
     }
 
+    /// <summary>
+    /// 根据软件名 获取软件预览图
+    /// </summary>
+    /// <param name="productName"></param>
+    /// <returns></returns>
     public Sprite[] GetProductPreviewTextures(string productName)
     {
         DirectoryInfo dirInfo = new DirectoryInfo(GetProductPreviewDirPath(productName));

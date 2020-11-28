@@ -61,12 +61,18 @@ public class ProductInfoPanel : UIPanel
         downloadBtn.AddListener(OnDownloadBtnClicked);
         backBtn.AddListener(OnBackBtnClicked);
 
+        if(string.IsNullOrEmpty(info.FilePath))
+        {
+            downloadBtn.gameObject.SetActive(true);
+
+            return;
+        }
         downloadBtn.gameObject.SetActive(!info.FilePath.EndsWith(".exe"));       
     }
 
     private void OnPlayBtnClicked()
     {
-        if(!info.FilePath.EndsWith(".exe"))
+        if(string.IsNullOrEmpty(info.FilePath) || !info.FilePath.EndsWith(".exe"))
         {
             return;
         }
