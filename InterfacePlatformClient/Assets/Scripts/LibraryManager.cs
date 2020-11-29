@@ -51,7 +51,8 @@ public class LibraryManager : GenericSingleton<LibraryManager>
         }
     }
 
-    public List<ProductInfo> productInfosList;
+    private List<ProductInfo> productInfosList;
+    private List<ProductInfo> relatedProductInfosList;
 
     public void InitManager()
     {
@@ -113,7 +114,7 @@ public class LibraryManager : GenericSingleton<LibraryManager>
     }
 
     /// <summary>
-    /// 根据产品名获取产品信息
+    /// 根据产品名获取产品信息，会有一个Add操作，慎用
     /// </summary>
     /// <param name="productName"></param>
     /// <returns></returns>
@@ -126,6 +127,31 @@ public class LibraryManager : GenericSingleton<LibraryManager>
         productInfosList.Add(info);
 
         return info;
+    }
+
+    /// <summary>
+    /// 根据关键词获取相关软件
+    /// </summary>
+    public List<ProductInfo> GetRelatedProductsInfoListByKeywords(List<string> keywordsList)
+    {
+        var totalList = productInfosList;
+        //筛选包含关键词的ProductInfo
+        List<ProductInfo> relatedInfoList = new List<ProductInfo>();
+        keywordsList.ForEach((key) =>
+        {
+            totalList.ForEach((info) =>
+            {
+                if (info.Classifies.Contains(key))
+                {
+                    if(!relatedInfoList.Contains(info))
+                    {
+                        relatedInfoList.Add(info);
+                    }
+                }
+            });
+        });
+
+        return relatedInfoList;
     }
 
     public static string GetProductRootDirPath()
@@ -152,7 +178,7 @@ public class LibraryManager : GenericSingleton<LibraryManager>
     }
 
     /// <summary>
-    /// 根据软件名 获取软件预览图
+    /// 根据软件名 获取软件预览图 IO方式
     /// </summary>
     /// <param name="productName"></param>
     /// <returns></returns>
@@ -179,5 +205,13 @@ public class LibraryManager : GenericSingleton<LibraryManager>
         }
 
         return sprites.ToArray();
+    }
+
+    /// <summary>
+    /// 根据软件名 获取软件预览图 携程方式
+    /// </summary>
+    public IEnumerator GetProductPreviewTexturesCor(string productName)
+    {
+        yield return null;
     }
 }

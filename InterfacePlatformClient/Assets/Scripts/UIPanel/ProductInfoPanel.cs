@@ -28,6 +28,8 @@ public class ProductInfoPanel : UIPanel
     public Text descText;
     [Header("相关内容位置")]
     public Transform relatedProductRoot;
+    [Header("详细信息面板位置")]
+    public Transform productInfoRoot;
 
     public ImageButton backBtn;
 
@@ -56,6 +58,7 @@ public class ProductInfoPanel : UIPanel
         descText.SetText(info.Description);
 
         previewInfoPart.Init(info);
+        FindRelatedProducts();
 
         playBtn.AddListener(OnPlayBtnClicked);
         downloadBtn.AddListener(OnDownloadBtnClicked);
@@ -83,6 +86,26 @@ public class ProductInfoPanel : UIPanel
     private void OnDownloadBtnClicked()
     {
 
+    }
+
+    /// <summary>
+    /// 获取相关软件
+    /// </summary>
+    private void FindRelatedProducts()
+    {
+        var relatedInfoList = LibraryManager.GetInstance().GetRelatedProductsInfoListByKeywords(info.Classifies);
+        if (relatedInfoList == null || relatedInfoList.Count == 0)
+        {
+            return;
+        }
+
+        relatedInfoList.Remove(info);//相关软件列表移除正在显示的这个
+        foreach (var info in relatedInfoList)
+        {
+            var infoUI = UIManager.Instance.LoadUI<LibraryInfoUI>(IPResDictionary.LibraryInfoUI);
+            infoUI.transform.SetParent(relatedProductRoot);
+            infoUI.Init(info, transform.parent);
+        }
     }
 
     public void OnBackBtnClicked()
