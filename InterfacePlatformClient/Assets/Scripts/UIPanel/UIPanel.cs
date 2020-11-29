@@ -28,6 +28,9 @@ public class UIPanel : MonoBehaviour
         gameObject.SetActive(false);
     }
 
+    /// <summary>
+    /// 记得处理事件写在base()之前
+    /// </summary>
     public virtual void ClosePanel()
     {
         UIManager.GetInstance().RemovePanel(this);

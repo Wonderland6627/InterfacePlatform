@@ -104,11 +104,13 @@ public class UnityPanel : UIPanel
     {
         if (string.IsNullOrEmpty(filePath))
         {
+            UIManager.GetInstance().ShowMessagePanel(new MessageParam { content = "Editor选择路径为空 !" });
             Debug.LogError("Editor选择路径为空");
             return;
         }
         if (!filePath.EndsWith(@"Editor\Unity.exe"))
         {
+            UIManager.GetInstance().ShowMessagePanel(new MessageParam { content = "选择的不是Unity.exe !" });
             Debug.LogError("选择的不是Unity.exe");
             return;
         }
@@ -125,6 +127,7 @@ public class UnityPanel : UIPanel
     {
         if (versionLocationsList.Exists((item) => { return item.version == location.version; }))//传入的location和list中已有的只是值相同 还是要通过version比较一下
         {
+            UIManager.GetInstance().ShowMessagePanel(new MessageParam { content = string.Format("Unity{0} 已添加 !", location.version) });
             Debug.LogError(location.version + "已添加");
             return;
         }
@@ -144,7 +147,7 @@ public class UnityPanel : UIPanel
 
     private void OnForeachFailed()
     {
-        //todo 弹出提示框
+        UIManager.GetInstance().ShowMessagePanel(new MessageParam { content = "您已取消选择 ！" });
     }
 
     /// <summary>
@@ -170,11 +173,13 @@ public class UnityPanel : UIPanel
         string installerPath = GetInstallerPath();
         if (string.IsNullOrEmpty(installerPath))
         {
+            UIManager.GetInstance().ShowMessagePanel(new MessageParam { content = "安装包路径为空 ！" });
             Debug.LogError("安装包路径为空");
             return;
         }
         if (!File.Exists(installerPath))
-        {
+        {           
+            UIManager.GetInstance().ShowMessagePanel(new MessageParam { content = "安装包不存在 ！" });
             Debug.Log("安装包不存在");
             string url = "";
             if (versionDownloadTable.TryGetValue(selectedVersion, out url))
@@ -185,6 +190,7 @@ public class UnityPanel : UIPanel
             else
             {
                 OpenUnityCN();
+                UIManager.GetInstance().ShowMessagePanel(new MessageParam { content = "链接有误，前往官网 ！" });
                 Debug.LogError("链接有误，前往官网");
             }
             return;

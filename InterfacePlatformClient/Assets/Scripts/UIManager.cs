@@ -132,15 +132,17 @@ public class UIManager : MonoBehaviour
     /// <summary>
     /// 提示弹窗
     /// </summary>
-    private void ShowMessagePanel(MessageParam param)
+    public void ShowMessagePanel(MessageParam param)
     {
-        MessagePanel messagePanel = Resources.Load<MessagePanel>("UIPanel/MessagePanel");
-        if (messagePanel == null)
+        MessagePanel msgPanelRes = LoadUI<MessagePanel>(IPResDictionary.MessagePanel);
+        if (msgPanelRes == null)
         {
             Debug.LogError("提示窗加载失败");
             return;
         }
 
-        messagePanel.InitPanel(param);
+        MessagePanel msgPanel = Instantiate(msgPanelRes, TopUIRoot) as MessagePanel;
+        msgPanel.InitPanel(param);
+        UIPanelsList.Add(msgPanel);
     }
 }
